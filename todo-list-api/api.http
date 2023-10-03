@@ -1,0 +1,72 @@
+POST http://localhost:3000/auth/sign-up
+content-Type: application/json
+
+{
+}
+
+###
+
+POST http://localhost:3000/auth/sign-up
+content-Type: application/json
+
+{
+  "name": "Lucas",
+  "username": "lucas",
+  "password": "testing"
+}
+
+###
+
+# @name signIn
+POST http://localhost:3000/auth/sign-in
+content-Type: application/json
+
+{
+  "username": "lucas",
+  "password": "testing"
+}
+
+###
+
+@token = {{signIn.response.body.token}}
+
+# @name createTask
+POST http://localhost:3000/task/create
+content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "description": "first task"
+}
+
+###
+
+@taskId = {{createTask.response.body.id}}
+
+# @name updateTask
+PUT http://localhost:3000/task/update/{{taskId}}
+content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "description": "first task updated",
+  "isDone": true
+}
+
+###
+
+DELETE http://localhost:3000/task/delete/{{taskId}}
+content-Type: application/json
+x-access-token: {{token}}
+
+###
+
+GET http://localhost:3000/task/find/{{taskId}}
+content-Type: application/json
+x-access-token: {{token}}
+
+###
+
+GET http://localhost:3000/task/find-all
+content-Type: application/json
+x-access-token: {{token}}
