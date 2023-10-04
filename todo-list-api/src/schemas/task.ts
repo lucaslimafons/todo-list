@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const taskCreateSchema = z.object({
   description: z.string().min(1),
-  deadline: z.date().optional(),
+  deadline: z.coerce.date().optional(),
   isDone: z.boolean().optional().default(false),
   priority: z.number().optional().default(0),
   userId: z.string().uuid().min(1)
@@ -13,7 +13,7 @@ export type TaskCreateInput = z.infer<typeof taskCreateSchema>
 export const taskUpdateSchema = z.object({
   id: z.string().uuid(),
   description: z.string().min(1),
-  deadline: z.date().optional(),
+  deadline: z.coerce.date().optional(),
   isDone: z.boolean().default(false),
   priority: z.number().default(0),
   userId: z.string().uuid().min(1)
